@@ -73,7 +73,8 @@ const dogsRule = document.querySelector('.img-fluid.rounded');
 window.addEventListener('resize', () => {
   dogsRule.src =
     'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
-});
+    });
+
 
 //MouseOver 5
 const btn = document.querySelector('.btn');
@@ -86,7 +87,7 @@ btn.addEventListener('mouseleave', () => {
   btn.style.transition = 'all 0.3s';
 });
 
-// Mouse Enter NESTED
+// Mouse Enter NESTED prevent the event propagation properly
 document.querySelectorAll('.nav-link').forEach(el => {
   el.addEventListener('mouseenter', () => {
     el.style.color = 'purple';
@@ -107,15 +108,41 @@ document.querySelectorAll('.nav-link').forEach(el => {
 
 //focus
 window.onload = function() {
-  document.querySelectorAll('text-content').focus();
+  document.querySelectorAll('content-pick').focus();
 };
 
-//select
-// function logSelection(event) {
-//     const BTN = document.getElementById('.btn');
-//     const selection = event.target.value.substring(event.target.selectionStart, event.target.selectionEnd);
-//     log.textContent = `You selected: ${selection}`;
-//   }
+// Stop Propogation
+const body = document.querySelector("body");
 
-//   const input = document.querySelector('input');
-//   input.addEventListener('select', logSelection);
+body.addEventListener("click", (event) => {
+    body.style.backgroundColor = "papayawhip";
+    console.log("end")
+    event.stopPropagation();
+})
+
+const contentDestination = document.querySelector(".content-destination");
+contentDestination.addEventListener('click', (event) => {
+    contentDestination.style.backgroundColor="rebeccapurple";
+    console.log("middle")
+    setTimeout(() => {
+        contentDestination.style.backgroundColor = '';
+      }, 3000);
+    });
+
+const boat = document.querySelector(".img-content");
+boat.addEventListener('click', (event) => {
+    boat.style.backgroundColor="blue";
+    console.log(event);
+    event.stopPropagation();
+    setTimeout(() => {
+        boat.style.backgroundColor = '';
+      }, 3000);
+    });
+
+
+
+//`preventDefault()`
+stopLink.addEventListener("click", (event) => {
+    console.log("stopped the link");
+    event.preventDefault();
+})
